@@ -19,11 +19,8 @@
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
 
-<link href="css.css" rel="stylesheet">            <!-- Importação do css local -->
-<script src="js.js"></script>                     <!-- Importando JS local-->
 
 <style>
-
 body { margin: 0; padding: 0; }
 #map { position: fixed;
         height: 92%;
@@ -419,7 +416,7 @@ body { margin: 0; padding: 0; }
 </div>
 
 <script>
-<<<<<<< HEAD
+
 //Pegar a data local do computador
 var today = new Date();
 var dy = today.getDate();
@@ -449,28 +446,25 @@ mapboxgl.accessToken = mapboxgl.accessToken;
     sessionStorage.setItem("lat", lat);
 
 
-  const map = new mapboxgl.Map({
-        container: 'map',                                         // container ID
-        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-        style: 'mapbox://styles/mapbox/streets-v11',              // style URL
-        center: [lng, lat],                        // starting position [lng, lat]
-        zoom: 15,                                                 // starting zoom
-        transformRequest: transformRequest,
-        antialias: false,
-        attributionControl:false,
-    });
+const map = new mapboxgl.Map({
+      container: 'map',                                         // container ID
+      style: 'mapbox://styles/mapbox/streets-v11',              // style URL
+      center: [lng, lat],                                       // starting position [lng, lat]
+      zoom: 15,                                                 // starting zoom
+      transformRequest: transformRequest,
+      antialias: false,
+      attributionControl:false,
+  });
 
-
-
-map.addControl(new mapboxgl.NavigationControl(),'top-left');  // Ferramenta de zoom
-map.addControl(new mapboxgl.FullscreenControl(), 'top-left'); // Ferramenta de expandir a tela
-map.addControl(                                               // Add geolocate control to the map.
+map.addControl(new mapboxgl.NavigationControl(),'top-left');    // Ferramenta de zoom
+map.addControl(new mapboxgl.FullscreenControl(), 'top-left');   // Ferramenta de expandir a tela
+map.addControl(                                                 // Add geolocate control to the map.
 new mapboxgl.GeolocateControl({
       positionOptions: {
           enableHighAccuracy: true
       },
-      trackUserLocation: true, // When active the map will receive updates to the device's location as it changes.
-      showUserHeading: true // Draw an arrow next to the location dot to indicate which direction the device is heading.
+      trackUserLocation: true,                                  // When active the map will receive updates to the device's location as it changes.
+      showUserHeading: true                                     // Draw an arrow next to the location dot to indicate which direction the device is heading.
       }), 'top-left'
     );
 
