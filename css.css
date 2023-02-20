@@ -1,0 +1,843 @@
+<<<<<<< HEAD
+body { margin: 0; padding: 0; }
+#map { position: fixed;
+        height: 92%;
+        width: 100%;
+        z-index: -2;
+        top: 8%;
+}
+#botao { position: fixed;
+        bottom: 8%;
+        right: 5%;
+        width: 60px;
+        height: 60px;
+        z-index: -1;
+        }
+
+#img_botao { position: fixed;
+        bottom: 8%;
+        right: 5%;
+        width: 60px;
+        height: 60px;
+        z-index: -1;
+}
+/* Mapbox */
+
+.mapboxgl-map .mapboxgl-popup{
+    left:20%;
+    top: 25%;
+    height: 50%;
+    width: 350px;
+    position:fixed;
+    transform:none !important;
+}
+.mapboxgl-map .mapboxgl-popup-tip{display:none;}
+
+
+.mapboxgl-popup-close-button {
+  display: none;
+}
+
+.mapboxgl-popup-content {
+  font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+  background-color: #5555;
+  position:fixed;
+  padding: 10px;
+  width: 300px;
+  right: 10px;
+  border: 3px;
+  border-color: #f1f1f1;
+}
+
+.mapboxgl-popup-content-wrapper {
+  padding: 1%;
+}
+
+.mapboxgl-popup-content h5 {
+  background: rgb(239, 154, 49);
+  text-align: center;
+  color: #fff;
+  margin: 0;
+  display: block;
+  padding: 10px;
+  font-weight: 700;
+  margin-top: -5px;
+}
+
+.mapboxgl-popup-content h6 {
+  margin: 0;
+  display: block;
+  padding: 5px;
+  font-weight: 400;
+}
+
+.mapboxgl-container {
+  cursor: pointer;
+}
+
+.marker {
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+}
+
+#geocoder-container {
+    width: 100px;
+    margin-left: 25%;
+}
+
+/*------------Cabeçalho-------------------------*/
+#header {
+  position: fixed;
+  background: #fff;
+  transition: all 0.5s;
+  z-index: 997;
+  height: 8%;
+  width: 100%;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.53);
+}
+
+#header.fixed-top {
+  height: 10%;
+}
+
+#header .logo {
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  font-family: "Poppins", sans-serif;
+}
+
+#header .logo a {
+  color: #ef9a31;
+}
+
+#header .logo a span {
+  color: #000053;
+}
+
+#header .logo img {
+  max-height: 40px;
+}
+
+.scrolled-offset {
+  margin-top: 70px;
+}
+
+
+/*------------Navigation Menu-------------------------*/
+.navbar {
+  padding: 0;
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  position: relative;
+}
+
+.navbar>ul>li {
+  white-space: nowrap;
+  padding: 10px 0 10px 28px;
+}
+
+.navbar a,
+.navbar a:focus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #000053;
+  white-space: nowrap;
+  transition: 0.3s;
+  position: relative;
+}
+
+.navbar a i,
+.navbar a:focus i {
+  font-size: 12px;
+  line-height: 0;
+  margin-left: 5px;
+}
+
+.navbar>ul>li>a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -6px;
+  left: 0;
+  background-color: #ef9a31;
+  visibility: hidden;
+  width: 0px;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.navbar a:hover:before,
+.navbar li:hover>a:before,
+.navbar .active:before {
+  visibility: visible;
+  width: 100%;
+}
+
+.navbar a:hover,
+.navbar .active,
+.navbar .active:focus,
+.navbar li:hover>a {
+  color: #ef9a31;
+}
+
+.navbar .dropdown ul {
+  display: block;
+  position: absolute;
+  left: 28px;
+  top: calc(100% + 30px);
+  margin: 0;
+  padding: 10px 0;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+  transition: 0.3s;
+}
+
+.navbar .dropdown ul li {
+  min-width: 200px;
+}
+
+.navbar .dropdown ul a {
+  padding: 10px 20px;
+  font-weight: 400;
+}
+
+.navbar .dropdown ul a i {
+  font-size: 12px;
+}
+
+.navbar .dropdown ul a:hover,
+.navbar .dropdown ul .active:hover,
+.navbar .dropdown ul li:hover>a {
+  color: #106eea;
+}
+
+.navbar .dropdown:hover>ul {
+  opacity: 1;
+  top: 100%;
+  visibility: visible;
+}
+
+.navbar .dropdown .dropdown ul {
+  top: 0;
+  left: calc(100% - 30px);
+  visibility: hidden;
+}
+
+.navbar .dropdown .dropdown:hover>ul {
+  opacity: 1;
+  top: 0;
+  left: 100%;
+  visibility: visible;
+}
+
+@media (max-width: 1366px) {
+  .navbar .dropdown .dropdown ul {
+    left: -90%;
+  }
+
+  .navbar .dropdown .dropdown:hover>ul {
+    left: -100%;
+  }
+}
+
+.loading{
+  width: 27px;
+  animation: rodar 1s infinite linear;
+}
+
+@keyframes rodar {
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+=======
+<<<<<<< HEAD
+body { margin: 0; padding: 0; }
+#map { position: fixed;
+        height: 92%;
+        width: 100%;
+        z-index: -2;
+        top: 8%;
+}
+#botao { position: fixed;
+        bottom: 8%;
+        right: 5%;
+        width: 60px;
+        height: 60px;
+        z-index: -1;
+        }
+
+#img_botao { position: fixed;
+        bottom: 8%;
+        right: 5%;
+        width: 60px;
+        height: 60px;
+        z-index: -1;
+}
+/* Mapbox */
+  
+.mapboxgl-map .mapboxgl-popup{
+    left:20%;
+    top: 25%;
+    height: 50%;
+    width: 350px;
+    position:fixed;
+    transform:none !important;
+}
+.mapboxgl-map .mapboxgl-popup-tip{display:none;}
+
+
+.mapboxgl-popup-close-button {
+  display: none;
+}
+
+.mapboxgl-popup-content {
+  font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+  background-color: #5555;
+  position:fixed;
+  padding: 10px;
+  width: 300px;
+  right: 10px;
+  border: 3px;
+  border-color: #f1f1f1;
+}
+
+.mapboxgl-popup-content-wrapper {
+  padding: 1%;
+}
+
+.mapboxgl-popup-content h5 {
+  background: rgb(239, 154, 49);
+  text-align: center;
+  color: #fff;
+  margin: 0;
+  display: block;
+  padding: 10px;
+  font-weight: 700;
+  margin-top: -5px;
+}
+
+.mapboxgl-popup-content h6 {
+  margin: 0;
+  display: block;
+  padding: 5px;
+  font-weight: 400;
+}
+
+.mapboxgl-container {
+  cursor: pointer;
+}
+
+.marker {
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+}
+
+#geocoder-container {
+    width: 100px;  
+    margin-left: 25%;
+}
+
+/*------------Cabeçalho-------------------------*/
+#header {
+  position: fixed;
+  background: #fff;
+  transition: all 0.5s;
+  z-index: 997;
+  height: 8%;
+  width: 100%;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.53);
+}
+
+#header.fixed-top {
+  height: 10%;
+}
+
+#header .logo {
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  font-family: "Poppins", sans-serif;
+}
+
+#header .logo a {
+  color: #ef9a31;
+}
+
+#header .logo a span {
+  color: #000053;
+}
+
+#header .logo img {
+  max-height: 40px;
+}
+
+.scrolled-offset {
+  margin-top: 70px;
+}
+
+
+/*------------Navigation Menu-------------------------*/
+.navbar {
+  padding: 0;
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  position: relative;
+}
+
+.navbar>ul>li {
+  white-space: nowrap;
+  padding: 10px 0 10px 28px;
+}
+
+.navbar a,
+.navbar a:focus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #000053;
+  white-space: nowrap;
+  transition: 0.3s;
+  position: relative;
+}
+
+.navbar a i,
+.navbar a:focus i {
+  font-size: 12px;
+  line-height: 0;
+  margin-left: 5px;
+}
+
+.navbar>ul>li>a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -6px;
+  left: 0;
+  background-color: #ef9a31;
+  visibility: hidden;
+  width: 0px;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.navbar a:hover:before,
+.navbar li:hover>a:before,
+.navbar .active:before {
+  visibility: visible;
+  width: 100%;
+}
+
+.navbar a:hover,
+.navbar .active,
+.navbar .active:focus,
+.navbar li:hover>a {
+  color: #ef9a31;
+}
+
+.navbar .dropdown ul {
+  display: block;
+  position: absolute;
+  left: 28px;
+  top: calc(100% + 30px);
+  margin: 0;
+  padding: 10px 0;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+  transition: 0.3s;
+}
+
+.navbar .dropdown ul li {
+  min-width: 200px;
+}
+
+.navbar .dropdown ul a {
+  padding: 10px 20px;
+  font-weight: 400;
+}
+
+.navbar .dropdown ul a i {
+  font-size: 12px;
+}
+
+.navbar .dropdown ul a:hover,
+.navbar .dropdown ul .active:hover,
+.navbar .dropdown ul li:hover>a {
+  color: #106eea;
+}
+
+.navbar .dropdown:hover>ul {
+  opacity: 1;
+  top: 100%;
+  visibility: visible;
+}
+
+.navbar .dropdown .dropdown ul {
+  top: 0;
+  left: calc(100% - 30px);
+  visibility: hidden;
+}
+
+.navbar .dropdown .dropdown:hover>ul {
+  opacity: 1;
+  top: 0;
+  left: 100%;
+  visibility: visible;
+}
+
+@media (max-width: 1366px) {
+  .navbar .dropdown .dropdown ul {
+    left: -90%;
+  }
+
+  .navbar .dropdown .dropdown:hover>ul {
+    left: -100%;
+  }
+}
+
+.loading{
+  width: 27px;
+  animation: rodar 1s infinite linear;
+}
+
+@keyframes rodar {
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+
+
+
+=======
+body { margin: 0; padding: 0; }
+#map { position: fixed;
+        height: 92%;
+        width: 100%;
+        z-index: -2;
+        top: 8%;
+}
+#botao { position: fixed;
+        bottom: 8%;
+        right: 5%;
+        width: 60px;
+        height: 60px;
+        z-index: -1;
+        }
+
+#img_botao { position: fixed;
+        bottom: 8%;
+        right: 5%;
+        width: 60px;
+        height: 60px;
+        z-index: -1;
+}
+/* Mapbox */
+  
+.mapboxgl-map .mapboxgl-popup{
+    left:20%;
+    top: 25%;
+    height: 50%;
+    width: 350px;
+    position:fixed;
+    transform:none !important;
+}
+.mapboxgl-map .mapboxgl-popup-tip{display:none;}
+
+
+.mapboxgl-popup-close-button {
+  display: none;
+}
+
+.mapboxgl-popup-content {
+  font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+  background-color: #5555;
+  position:fixed;
+  padding: 10px;
+  width: 300px;
+  right: 10px;
+  border: 3px;
+  border-color: #f1f1f1;
+}
+
+.mapboxgl-popup-content-wrapper {
+  padding: 1%;
+}
+
+.mapboxgl-popup-content h5 {
+  background: rgb(239, 154, 49);
+  text-align: center;
+  color: #fff;
+  margin: 0;
+  display: block;
+  padding: 10px;
+  font-weight: 700;
+  margin-top: -5px;
+}
+
+.mapboxgl-popup-content h6 {
+  margin: 0;
+  display: block;
+  padding: 5px;
+  font-weight: 400;
+}
+
+.mapboxgl-container {
+  cursor: pointer;
+}
+
+.marker {
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+}
+
+#geocoder-container {
+    width: 100px;  
+    margin-left: 25%;
+}
+
+/*------------Cabeçalho-------------------------*/
+#header {
+  position: fixed;
+  background: #fff;
+  transition: all 0.5s;
+  z-index: 997;
+  height: 8%;
+  width: 100%;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.53);
+}
+
+#header.fixed-top {
+  height: 10%;
+}
+
+#header .logo {
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  font-family: "Poppins", sans-serif;
+}
+
+#header .logo a {
+  color: #ef9a31;
+}
+
+#header .logo a span {
+  color: #000053;
+}
+
+#header .logo img {
+  max-height: 40px;
+}
+
+.scrolled-offset {
+  margin-top: 70px;
+}
+
+
+/*------------Navigation Menu-------------------------*/
+.navbar {
+  padding: 0;
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  position: relative;
+}
+
+.navbar>ul>li {
+  white-space: nowrap;
+  padding: 10px 0 10px 28px;
+}
+
+.navbar a,
+.navbar a:focus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #000053;
+  white-space: nowrap;
+  transition: 0.3s;
+  position: relative;
+}
+
+.navbar a i,
+.navbar a:focus i {
+  font-size: 12px;
+  line-height: 0;
+  margin-left: 5px;
+}
+
+.navbar>ul>li>a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -6px;
+  left: 0;
+  background-color: #ef9a31;
+  visibility: hidden;
+  width: 0px;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.navbar a:hover:before,
+.navbar li:hover>a:before,
+.navbar .active:before {
+  visibility: visible;
+  width: 100%;
+}
+
+.navbar a:hover,
+.navbar .active,
+.navbar .active:focus,
+.navbar li:hover>a {
+  color: #ef9a31;
+}
+
+.navbar .dropdown ul {
+  display: block;
+  position: absolute;
+  left: 28px;
+  top: calc(100% + 30px);
+  margin: 0;
+  padding: 10px 0;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+  transition: 0.3s;
+}
+
+.navbar .dropdown ul li {
+  min-width: 200px;
+}
+
+.navbar .dropdown ul a {
+  padding: 10px 20px;
+  font-weight: 400;
+}
+
+.navbar .dropdown ul a i {
+  font-size: 12px;
+}
+
+.navbar .dropdown ul a:hover,
+.navbar .dropdown ul .active:hover,
+.navbar .dropdown ul li:hover>a {
+  color: #106eea;
+}
+
+.navbar .dropdown:hover>ul {
+  opacity: 1;
+  top: 100%;
+  visibility: visible;
+}
+
+.navbar .dropdown .dropdown ul {
+  top: 0;
+  left: calc(100% - 30px);
+  visibility: hidden;
+}
+
+.navbar .dropdown .dropdown:hover>ul {
+  opacity: 1;
+  top: 0;
+  left: 100%;
+  visibility: visible;
+}
+
+@media (max-width: 1366px) {
+  .navbar .dropdown .dropdown ul {
+    left: -90%;
+  }
+
+  .navbar .dropdown .dropdown:hover>ul {
+    left: -100%;
+  }
+}
+
+.loading{
+  width: 27px;
+  animation: rodar 1s infinite linear;
+}
+
+@keyframes rodar {
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+
+
+
+>>>>>>> b283536607f12b9893ea28c5a907bcc1419e1915
+>>>>>>> 946b7b52166638c4a36d36b987258068a38d6ebf
