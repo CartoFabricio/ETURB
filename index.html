@@ -20,8 +20,8 @@
   <!-- Importação do css local -->
   <link href="./css.css" rel="stylesheet">
 
-  <style>
-  </style>
+  <!-- Importando JS local-->
+  <script src="./js"> </script>
 </head>
 <body>
 
@@ -40,104 +40,99 @@
   </div>
 </header><!-- End Header -->
 
-<div class="container">
-    <!-- Button trigger modal -->
-  <button id ="botao" type="button" class="btn btn-light rounded-circle lg"  data-toggle="modal" data-target="#exampleModal">
-  	<img id ="img_botao" src="adicionar.png" alt="">
-  </button>
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Cadastro de informações</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <!-- Formulario -->
-  		<form class="row g-3 needs-validation">
-  			<div class="col-md-12">
-  			  <label for="validationCustom01" class="form-label">Cadastrante</label>
-  			  <input type="text" class="form-control" id="validationCustom01" value="Seu nome..." name="Cadastrante">
-  			  <div class="valid-feedback">
-  				Looks good!
-  			  </div>
-  			</div>
-  			<div class="col-md-4">
-  			  <label for="validationCustom02" class="form-label">Data</label>
-  			  <input name="Data" id="id_01" type="text" class="form-control"  name="Data"/>
-  			  <div class="valid-feedback">
-  				Looks good!
-  			  </div>
-  			</div>
+  <div id="map"></div>
 
-  			<div class="col-md-4">
-  				<label for="validationCustom04" class="form-label">Tamanho do buraco</label>
-  				<select class="form-select" id="validationCustom04" name="Tamanho">
-  				  <option>Pequeno</option>
-  				  <option>Medio</option>
-  				  <option>Grande</option>
-  				</select>
-  				<div class="invalid-feedback">
-  				  Please select a valid state.
-  				</div>
-  			</div>
+  <div class="container">
+      <!-- Button trigger modal -->
+    <button id ="botao" type="button" class="btn btn-light rounded-circle lg"  data-toggle="modal" data-target="#exampleModal">
+    	<img id ="img_botao" src="adicionar.png" alt="">
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cadastro de informações</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Formulario -->
+    		<form class="row g-3 needs-validation">
+    			<div class="col-md-12">
+    			  <label for="validationCustom01" class="form-label">Cadastrante</label>
+    			  <input type="text" class="form-control" id="validationCustom01" value="Seu nome..." name="Cadastrante">
+    			  <div class="valid-feedback">
+    				Looks good!
+    			  </div>
+    			</div>
+    			<div class="col-md-4">
+    			  <label for="validationCustom02" class="form-label">Data</label>
+    			  <input name="Data" id="id_01" type="text" class="form-control"  name="Data"/>
+    			  <div class="valid-feedback">
+    				Looks good!
+    			  </div>
+    			</div>
 
-  			<div class="col-md-4">
-  				<label for="validationCustom04" class="form-label">Tipo de Cobertura</label>
-  				<select class="form-select" id="validationCustom04" name="Revestimento">
-  				  <option>Asfalto</option>
-  				  <option>Cascalho</option>
-  				  <option>Cano furado</option>
-  				  <option>Paralelepipedo</option>
-  				</select>
-  			</div>
+    			<div class="col-md-4">
+    				<label for="validationCustom04" class="form-label">Tamanho do buraco</label>
+    				<select class="form-select" id="validationCustom04" name="Tamanho">
+    				  <option>Pequeno</option>
+    				  <option>Medio</option>
+    				  <option>Grande</option>
+    				</select>
+    				<div class="invalid-feedback">
+    				  Please select a valid state.
+    				</div>
+    			</div>
 
-  			<div class="col-md-12">
-  			  <label for="validationCustom01" class="form-label">Endereco</label>
-  			  <input type="text" class="form-control" id="validationCustom01" value="Rua ..." name="Endereco">
-  			  <div class="valid-feedback">
-  				Looks good!
-  			  </div>
-  			</div>
+    			<div class="col-md-4">
+    				<label for="validationCustom04" class="form-label">Tipo de Cobertura</label>
+    				<select class="form-select" id="validationCustom04" name="Revestimento">
+    				  <option>Asfalto</option>
+    				  <option>Cascalho</option>
+    				  <option>Cano furado</option>
+    				  <option>Paralelepipedo</option>
+    				</select>
+    			</div>
 
-  			<div class="col-md-6">
-  			  <label for="validationCustom03" class="form-label">Longitude</label>
-  			  <span class="input-group-text" id="Longitude" name="Longitude">
-  				<pre id="info"></pre>
-  			  </span>
-  			</div>
+    			<div class="col-md-12">
+    			  <label for="validationCustom01" class="form-label">Endereco</label>
+    			  <input type="text" class="form-control" id="validationCustom01" value="Rua ..." name="Endereco">
+    			  <div class="valid-feedback">
+    				Looks good!
+    			  </div>
+    			</div>
 
-        <div class="col-md-6">
-  			  <label for="validationCustom03" class="form-label">Latitude</label>
-  			  <span class="input-group-text" id="Latitude" name="Latitude">
-  				<pre id="info2"></pre>
-  			  </span>
-  			</div>
+    			<div class="col-md-6">
+    			  <label for="validationCustom03" class="form-label">Longitude</label>
+    			  <span class="input-group-text" id="Longitude" name="Longitude">
+    				<pre id="info"></pre>
+    			  </span>
+    			</div>
 
-  			<div class="col-md-12">
-  				<label for="formFile" class="form-label">Inserir Imagem</label>
-  				<input class="form-control" type="file" id="formFile" name="Imagem">
-  			</div>
+          <div class="col-md-6">
+    			  <label for="validationCustom03" class="form-label">Latitude</label>
+    			  <span class="input-group-text" id="Latitude" name="Latitude">
+    				<pre id="info2"></pre>
+    			  </span>
+    			</div>
 
-    		<div class="modal-footer">
-  				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-  				<button type="submit" class="btn btn-warning" id="btn_rodar">Enviar	</button>
-  		    </div>
-  		  </form>
+    			<div class="col-md-12">
+    				<label for="formFile" class="form-label">Inserir Imagem</label>
+    				<input class="form-control" type="file" id="formFile" name="Imagem">
+    			</div>
+
+      		<div class="modal-footer">
+    				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+    				<button type="submit" class="btn btn-warning" id="btn_rodar">Enviar	</button>
+    		    </div>
+    		  </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
-
-
-<div id="map"></div>
-<!-- Importando JS local-->
-<script src="./js.js"> </script>
-
-
 </body>
 </html>
