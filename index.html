@@ -1,137 +1,626 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="google" content="notranslate">
-  <title>ETURB</title>
-  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <link href="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css" rel="stylesheet">
-  <script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script>
-  <script src='https://npmcdn.com/csv2geojson@latest/csv2geojson.js'></script>
-  <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
-  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+<meta charset="utf-8">
+<meta name="google" content="notranslate">
+<title>ETURB</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 
-  <!-- Importação do css local -->
-  <link href="./css.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-  <!-- Importando JS local-->
-  <script src="./js.js"> </script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script>
+<script src='https://npmcdn.com/csv2geojson@latest/csv2geojson.js'></script>
+<script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+
+<style>
+body { margin: 0; padding: 0; }
+#map { position: fixed;
+        height: 92%;
+        width: 100%;
+        z-index: -2;
+        top: 8%;
+}
+#botao { position: fixed;
+        bottom: 8%;
+        right: 5%;
+        width: 60px;
+        height: 60px;
+        z-index: -1;
+        }
+
+#img_botao { position: fixed;
+        bottom: 8%;
+        right: 5%;
+        width: 60px;
+        height: 60px;
+        z-index: -1;
+}
+/* Mapbox */
+
+.mapboxgl-map .mapboxgl-popup{
+    left:20%;
+    top: 25%;
+    height: 50%;
+    width: 350px;
+    position:fixed;
+    transform:none !important;
+}
+.mapboxgl-map .mapboxgl-popup-tip{display:none;}
+
+
+.mapboxgl-popup-close-button {
+  display: none;
+}
+
+.mapboxgl-popup-content {
+  font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+  background-color: #5555;
+  position:fixed;
+  padding: 10px;
+  width: 300px;
+  right: 10px;
+  border: 3px;
+  border-color: #f1f1f1;
+}
+
+.mapboxgl-popup-content-wrapper {
+  padding: 1%;
+}
+
+.mapboxgl-popup-content h5 {
+  background: rgb(239, 154, 49);
+  text-align: center;
+  color: #fff;
+  margin: 0;
+  display: block;
+  padding: 10px;
+  font-weight: 700;
+  margin-top: -5px;
+}
+
+.mapboxgl-popup-content h6 {
+  margin: 0;
+  display: block;
+  padding: 5px;
+  font-weight: 400;
+}
+
+.mapboxgl-container {
+  cursor: pointer;
+}
+
+.marker {
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+}
+
+#geocoder-container {
+    width: 100px;
+    margin-left: 25%;
+}
+
+/*------------Cabeçalho-------------------------*/
+#header {
+  position: fixed;
+  background: #fff;
+  transition: all 0.5s;
+  z-index: 997;
+  height: 8%;
+  width: 100%;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.53);
+}
+
+#header.fixed-top {
+  height: 10%;
+}
+
+#header .logo {
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  font-family: "Poppins", sans-serif;
+}
+
+#header .logo a {
+  color: #ef9a31;
+}
+
+#header .logo a span {
+  color: #000053;
+}
+
+#header .logo img {
+  max-height: 40px;
+}
+
+.scrolled-offset {
+  margin-top: 70px;
+}
+
+
+/*------------Navigation Menu-------------------------*/
+.navbar {
+  padding: 0;
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  position: relative;
+}
+
+.navbar>ul>li {
+  white-space: nowrap;
+  padding: 10px 0 10px 28px;
+}
+
+.navbar a,
+.navbar a:focus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #000053;
+  white-space: nowrap;
+  transition: 0.3s;
+  position: relative;
+}
+
+.navbar a i,
+.navbar a:focus i {
+  font-size: 12px;
+  line-height: 0;
+  margin-left: 5px;
+}
+
+.navbar>ul>li>a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -6px;
+  left: 0;
+  background-color: #ef9a31;
+  visibility: hidden;
+  width: 0px;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.navbar a:hover:before,
+.navbar li:hover>a:before,
+.navbar .active:before {
+  visibility: visible;
+  width: 100%;
+}
+
+.navbar a:hover,
+.navbar .active,
+.navbar .active:focus,
+.navbar li:hover>a {
+  color: #ef9a31;
+}
+
+.navbar .dropdown ul {
+  display: block;
+  position: absolute;
+  left: 28px;
+  top: calc(100% + 30px);
+  margin: 0;
+  padding: 10px 0;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+  transition: 0.3s;
+}
+
+.navbar .dropdown ul li {
+  min-width: 200px;
+}
+
+.navbar .dropdown ul a {
+  padding: 10px 20px;
+  font-weight: 400;
+}
+
+.navbar .dropdown ul a i {
+  font-size: 12px;
+}
+
+.navbar .dropdown ul a:hover,
+.navbar .dropdown ul .active:hover,
+.navbar .dropdown ul li:hover>a {
+  color: #106eea;
+}
+
+.navbar .dropdown:hover>ul {
+  opacity: 1;
+  top: 100%;
+  visibility: visible;
+}
+
+.navbar .dropdown .dropdown ul {
+  top: 0;
+  left: calc(100% - 30px);
+  visibility: hidden;
+}
+
+.navbar .dropdown .dropdown:hover>ul {
+  opacity: 1;
+  top: 0;
+  left: 100%;
+  visibility: visible;
+}
+
+@media (max-width: 1366px) {
+  .navbar .dropdown .dropdown ul {
+    left: -90%;
+  }
+
+  .navbar .dropdown .dropdown:hover>ul {
+    left: -100%;
+  }
+}
+
+.loading{
+  width: 27px;
+  animation: rodar 1s infinite linear;
+}
+
+@keyframes rodar {
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+
+
+
+
+</style>
 </head>
 <body>
+
 
 <!-- ======= Header ======= -->
 <header id="header" class="d-flex align-items-center">
   <div class="container d-flex align-items-center justify-content-between">
+
+
     <h1 class="logo"><a href="index.html">ETURB<span>.</span></a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""></a>-->
+
     <nav id="navbar" class="navbar navbar-expand-lg">
       <ul>
-        <li><a class="nav-link scrollto" href="./Ajuda.html">Ajuda</a></li>
-        <li><a class="nav-link scrollto" href="./Contato.html">Contato</a></li>
+        <li><a class="nav-link scrollto active" href="mapa01.html">Início</a></li>
+        <li><a class="nav-link scrollto" href="#about">Ajuda</a></li>
+        <li><a class="nav-link scrollto" href="formulario/index.html">Contato</a></li>
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav>
+    </nav><!-- .navbar -->
+
   </div>
 </header><!-- End Header -->
 
-  <div id="map"></div>
+<div class="container">
+  <!-- Button trigger modal -->
+<button id ="botao" type="button" class="btn btn-light rounded-circle lg"  data-toggle="modal" data-target="#exampleModal">
+	<img id ="img_botao" src="adicionar.png" alt="">
+</button>
 
-  <div class="container">
-      <!-- Button trigger modal -->
-    <button id ="botao" type="button" class="btn btn-light rounded-circle lg"  data-toggle="modal" data-target="#exampleModal">
-    	<img id ="img_botao" src="adicionar.png" alt="">
-    </button>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Cadastro de informações</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <!-- Formulario -->
-    		<form class="row g-3 needs-validation">
-    			<div class="col-md-12">
-    			  <label for="validationCustom01" class="form-label">Cadastrante</label>
-    			  <input type="text" class="form-control" id="validationCustom01" value="Seu nome..." name="Cadastrante">
-    			  <div class="valid-feedback">
-    				Looks good!
-    			  </div>
-    			</div>
-    			<div class="col-md-4">
-    			  <label for="validationCustom02" class="form-label">Data</label>
-    			  <input name="Data" id="id_01" type="text" class="form-control"  name="Data"/>
-    			  <div class="valid-feedback">
-    				Looks good!
-    			  </div>
-    			</div>
-
-    			<div class="col-md-4">
-    				<label for="validationCustom04" class="form-label">Tamanho do buraco</label>
-    				<select class="form-select" id="validationCustom04" name="Tamanho">
-    				  <option>Pequeno</option>
-    				  <option>Medio</option>
-    				  <option>Grande</option>
-    				</select>
-    				<div class="invalid-feedback">
-    				  Please select a valid state.
-    				</div>
-    			</div>
-
-    			<div class="col-md-4">
-    				<label for="validationCustom04" class="form-label">Tipo de Cobertura</label>
-    				<select class="form-select" id="validationCustom04" name="Revestimento">
-    				  <option>Asfalto</option>
-    				  <option>Cascalho</option>
-    				  <option>Cano furado</option>
-    				  <option>Paralelepipedo</option>
-    				</select>
-    			</div>
-
-    			<div class="col-md-12">
-    			  <label for="validationCustom01" class="form-label">Endereco</label>
-    			  <input type="text" class="form-control" id="validationCustom01" value="Rua ..." name="Endereco">
-    			  <div class="valid-feedback">
-    				Looks good!
-    			  </div>
-    			</div>
-
-    			<div class="col-md-6">
-    			  <label for="validationCustom03" class="form-label">Longitude</label>
-    			  <span class="input-group-text" id="Longitude" name="Longitude">
-    				<pre id="info"></pre>
-    			  </span>
-    			</div>
-
-          <div class="col-md-6">
-    			  <label for="validationCustom03" class="form-label">Latitude</label>
-    			  <span class="input-group-text" id="Latitude" name="Latitude">
-    				<pre id="info2"></pre>
-    			  </span>
-    			</div>
-
-    			<div class="col-md-12">
-    				<label for="formFile" class="form-label">Inserir Imagem</label>
-    				<input class="form-control" type="file" id="formFile" name="Imagem">
-    			</div>
-
-      		<div class="modal-footer">
-    				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-    				<button type="submit" class="btn btn-warning" id="btn_rodar">Enviar	</button>
-    		    </div>
-    		  </form>
-          </div>
-        </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cadastro de informações</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <div class="modal-body">
+        <!-- Formulario -->
+		<form class="row g-3 needs-validation">
+			<div class="col-md-12">
+			  <label for="validationCustom01" class="form-label">Cadastrante</label>
+			  <input type="text" class="form-control" id="validationCustom01" value="Seu nome..." name="Cadastrante">
+			  <div class="valid-feedback">
+				Looks good!
+			  </div>
+			</div>
+			<div class="col-md-4">
+			  <label for="validationCustom02" class="form-label">Data</label>
+			  <input name="Data" id="id_01" type="text" class="form-control"  name="Data"/>
+			  <div class="valid-feedback">
+				Looks good!
+			  </div>
+			</div>
+
+			<div class="col-md-4">
+				<label for="validationCustom04" class="form-label">Tamanho do buraco</label>
+				<select class="form-select" id="validationCustom04" name="Tamanho">
+				  <option>Pequeno</option>
+				  <option>Medio</option>
+				  <option>Grande</option>
+				</select>
+				<div class="invalid-feedback">
+				  Please select a valid state.
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<label for="validationCustom04" class="form-label">Tipo de Cobertura</label>
+				<select class="form-select" id="validationCustom04" name="Revestimento">
+				  <option>Asfalto</option>
+				  <option>Cascalho</option>
+				  <option>Cano furado</option>
+				  <option>Paralelepipedo</option>
+				</select>
+			</div>
+
+			<div class="col-md-12">
+			  <label for="validationCustom01" class="form-label">Endereco</label>
+			  <input type="text" class="form-control" id="validationCustom01" value="Rua ..." name="Endereco">
+			  <div class="valid-feedback">
+				Looks good!
+			  </div>
+			</div>
+
+			<div class="col-md-6">
+			  <label for="validationCustom03" class="form-label">Longitude</label>
+			  <span class="input-group-text" id="Longitude" name="Longitude">
+				<pre id="info"></pre>
+			  </span>
+			</div>
+
+      <div class="col-md-6">
+			  <label for="validationCustom03" class="form-label">Latitude</label>
+			  <span class="input-group-text" id="Latitude" name="Latitude">
+				<pre id="info2"></pre>
+			  </span>
+			</div>
+
+			<div class="col-md-12">
+				<label for="formFile" class="form-label">Inserir Imagem</label>
+				<input class="form-control" type="file" id="formFile" name="Imagem">
+			</div>
+
+  		<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				<button type="submit" class="btn btn-warning" id="btn_rodar">Enviar	</button>
+		    </div>
+		  </form>
+
+      </div>
+
     </div>
   </div>
+</div>
+</div>
+
+
+<div id="map"></div>
+
+<script>
+//Pegar a data local do computador
+var today = new Date();
+var dy = today.getDate();
+var mt = today.getMonth()+1;
+var yr = today.getFullYear();
+document.getElementById('id_01').value= mt + "/" + dy +"/"+yr;
+
+var transformRequest = (url, resourceType) => {
+      var isMapboxRequest =
+        url.slice(8, 22) === "api.mapbox.com" ||
+        url.slice(10, 26) === "tiles.mapbox.com";
+      return {
+        url: isMapboxRequest
+          ? url.replace("?", "?pluginName=sheetMapper&")
+          : url
+      };
+    };
+
+//Localização em tempo real
+mapboxgl.accessToken = 'pk.eyJ1IjoiZmFicmljaW91ZnBpIiwiYSI6ImNsYjJodmQ1NTA0ajQ0MG9qaXMwZHp2bXAifQ.5knMPS6FF-K7P5Qhct2WiQ';
+const coordinates = document.getElementById('coordinates');
+navigator.geolocation.getCurrentPosition( function(position) {
+    var lng = position.coords.longitude;
+    var lat = position.coords.latitude;
+mapboxgl.accessToken = mapboxgl.accessToken;
+    sessionStorage.setItem("lng", lng);
+    sessionStorage.setItem("lat", lat);
+
+
+  const map = new mapboxgl.Map({
+        container: 'map',                                         // container ID
+        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+        style: 'mapbox://styles/mapbox/streets-v11',              // style URL
+        center: [lng, lat],                        // starting position [lng, lat]
+        zoom: 15,                                                 // starting zoom
+        transformRequest: transformRequest,
+        antialias: false,
+        attributionControl:false,
+    });
+
+
+
+map.addControl(new mapboxgl.NavigationControl(),'top-left');  // Ferramenta de zoom
+map.addControl(new mapboxgl.FullscreenControl(), 'top-left'); // Ferramenta de expandir a tela
+map.addControl(                                               // Add geolocate control to the map.
+new mapboxgl.GeolocateControl({
+      positionOptions: {
+          enableHighAccuracy: true
+      },
+      trackUserLocation: true, // When active the map will receive updates to the device's location as it changes.
+      showUserHeading: true // Draw an arrow next to the location dot to indicate which direction the device is heading.
+      }), 'top-left'
+    );
+
+ //Barra de pesquisa
+const geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    marker: false,
+    language: 'pt-BR',
+    mapboxgl: mapboxgl
+});
+map.addControl(geocoder);
+
+var marker = new mapboxgl.Marker();
+function add_marker (event) {
+  var coordinates = event.lngLat;
+  document.getElementById('Longitude').value= coordinates.lng;
+  document.getElementById('Latitude').value= coordinates.lat;
+  info.innerHTML = `${coordinates.lng}`;
+  info2.innerHTML = `${coordinates.lat}`;
+
+  marker.setLngLat(coordinates).addTo(map);
+}
+map.on('click', add_marker);
+
+//Cadastro de Informações
+
+//icone de caregando
+const button =  document.querySelector('button[id=btn_rodar]');
+
+const addloading = () => {
+
+    button.innerHTML = '<img src="load-icon-png-27.png" class="loading">';
+}
+
+const removeloading = () => {
+    button.innerHTML = 'Enviar';
+}
+
+
+//para inserir no banco de dados
+const handleSubmit = (event) => {
+    event.preventDefault();
+    addloading();
+    const Cadastrante = document.querySelector('input[name=Cadastrante]').value;
+    const Data = document.querySelector('input[name=Data]').value;
+    const Tamanho = document.querySelector('select[name=Tamanho]').value;
+    const Revestimento = document.querySelector('select[name=Revestimento]').value;
+    const Endereco = document.querySelector('input[name=Endereco]').value;
+    const Longitude = document.querySelector('span[name=Longitude]').value;
+    const Latitude = document.querySelector('span[name=Latitude]').value;
+    const Imagem = document.querySelector('input[name=Imagem]').value;
+    fetch('https://api.sheetmonkey.io/form/7bo1uLSK4P72PEmsUt1ww8', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ Cadastrante, Data, Tamanho, Revestimento, Endereco, Longitude, Latitude, Imagem}),
+    }).then(() => removeloading()).then(() => alert('Dados Salvos'));
+}
+
+document.querySelector('form').addEventListener('submit', handleSubmit);
+
+
+
+//Buscar os dados da Planilha Google e inserir os pontos no mapa
+     $(document).ready(function () {
+      $.ajax({
+        type: "GET",
+        url: 'https://docs.google.com/spreadsheets/d/1u0gpK0MStKsnVod6_mD0PGbgt_zlw65Fb0PQtE-S8SY/gviz/tq?tqx=out:csv&sheet=Sheet1',
+        dataType: "text",
+        success: function (csvData) { makeGeoJSON(csvData); }
+      });
+
+      function makeGeoJSON(csvData) {
+        csv2geojson.csv2geojson(csvData, {
+          latfield: 'Latitude',
+          lonfield: 'Longitude',
+          delimiter: ','
+        }, function (err, data) {
+          map.on('load', function () {
+            //Add the the layer to the map
+            map.addLayer({
+              'id': 'csvData',
+              'type': 'circle',
+              'source': {
+                'type': 'geojson',
+                'data': data
+              },
+              'paint': {
+                'circle-color': '#EF9A31',
+                'circle-radius': 5,
+                'circle-stroke-width': 1,
+                'circle-stroke-color': '#ffffff'
+              }
+            });
+
+            // When a click event occurs on a feature in the csvData layer, open a popup at the
+            // location of the feature, with description HTML from its properties.
+            map.on('click', 'csvData', function (e) {
+              var coordinates = e.features[0].geometry.coordinates.slice();
+
+              //set popup text
+              var description = `<h5>` + 'Informações' + `</h5>` +
+                  `<h6>` + `<b>` + `Cadastrante: ` + `</b>` + e.features[0].properties.Cadastrante + `</h6>` +
+                  `<h6>` + `<b>` + `Data: ` + `</b>` + e.features[0].properties.Data + `</h6>` +
+                  `<h6>` + `<b>` + `Endereço: ` + `</b>` + e.features[0].properties.Endereco + `</h6>` +
+                  `<h6>` + `<b>` + `Tamanho: ` + `</b>` + e.features[0].properties.Tamanho + `</h6>` +
+                  `<h6>` + `<b>` + `Revestimento: ` + `</b>` + e.features[0].properties.Revestimento + `</h6>` +
+                  `<h6>` + `<b>` + `Imagem: ` + `</b>` + e.features[0].properties.Imagem + `</h6>`;
+
+              // Ensure that if the map is zoomed out such that multiple copies of the feature are visible, the popup appears over the copy being pointed to.
+
+              while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+              }
+              //add Popup to map
+              new mapboxgl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(description)
+                .addTo(map);
+            });
+
+            // Change the cursor to a pointer when the mouse is over the places layer.
+            map.on('mouseenter', 'csvData', function () {
+              map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'places', function () {
+              map.getCanvas().style.cursor = '';
+            });
+
+            var bbox = turf.bbox(data);
+            map.fitBounds(bbox, { padding: 50 });
+
+          });
+
+        });
+      };
+    });
+  });
+</script>
+
 </body>
 </html>
